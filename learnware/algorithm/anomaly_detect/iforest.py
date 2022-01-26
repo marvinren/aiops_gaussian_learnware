@@ -4,10 +4,10 @@ from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import MinMaxScaler
 from scipy.special import erf
 
-from learnware.algorithm.anomaly_detect.base import BaseAnomalyDetector
+from learnware.algorithm.anomaly_detect.base import BaseAnomalyDetect
 
 
-class iForest(BaseAnomalyDetector):
+class iForest(BaseAnomalyDetect):
 
     def __init__(self, n_estimators=100,
                  max_samples="auto",

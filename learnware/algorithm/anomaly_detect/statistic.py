@@ -1,10 +1,10 @@
 import numpy as np
 from scipy import stats
 
-from learnware.algorithm.anomaly_detect.base import BaseAnomalyDetector
+from learnware.algorithm.anomaly_detect.base import BaseAnomalyDetect
 
 
-class ThreeSigma(BaseAnomalyDetector):
+class ThreeSigma(BaseAnomalyDetect):
     """
     使用统计分析里常用的3个sigma的异常检测的方法，发现数据的离群性，主要针对最后一个值来判断该值是否异常
     具体思路可以查看正态分布中的概率分布，68.27%, 95.45% and 99.73%
@@ -19,9 +19,13 @@ class ThreeSigma(BaseAnomalyDetector):
     def fit(self, X, y=None):
         self.mu_ = np.mean(X)
         self.sigma_ = np.std(X)
-        print(self.mu_)
-        print(self.sigma_)
         return self
+
+    def predict_one(self, X, return_confidence=False):
+        if abs(X[-1] - self.mu_) > self.index * self.sigma_:
+            return -1
+        else:
+            return 1
 
     def predict(self, X, y=None, return_confidence=False):
         pred = np.ones_like(X, dtype=int)

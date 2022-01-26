@@ -1,7 +1,7 @@
 import abc
 
 
-class BaseAnomalyDetector(metaclass=abc.ABCMeta):
+class BaseAnomalyDetect(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def __init__(self):
