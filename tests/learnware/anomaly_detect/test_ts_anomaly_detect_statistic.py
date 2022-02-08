@@ -15,6 +15,7 @@ class TestTimeSeriesAnomalyDetect:
         print(ret)
 
         ret = model.predict(X_outliers)
+        print(ret)
         assert len(ret[ret < 0]) > 0
 
     def test_ts_statistic_anomaly_detect_conf(self):

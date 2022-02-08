@@ -44,7 +44,7 @@ class ARIMA(BaseAnomalyDetect):
         labels = []
         for idx, row in forecast_ci.iterrows():
             if row["value"] > row["upper value"] or row["value"] < row["lower value"]:
-               labels.append(-1)
+                labels.append(-1)
             else:
                 labels.append(1)
         return labels
