@@ -1,23 +1,30 @@
 import numpy as np
+import pandas as pd
 
 
 class Ewma(object):
     def __init__(self, alpha=0.3, coefficient=3, window_size=10):
         self.alpha = alpha
         self.coefficient = coefficient
-        self.window_size = 10
+        self.window_size = window_size
+        self.ucl = None
+        self.lcl = None
 
-    def predict_one(self, X):
+    def fit(self, X):
+        if type(X) is pd.Series:
+            X = X.to_list()
         s = [X[0]]
         for i in range(1, len(X)):
             temp = self.alpha * X[i] + (1 - self.alpha) * s[-1]
             s.append(temp)
         s_avg = np.mean(s)
         sigma = np.sqrt(np.var(X))
-        ucl = s_avg + self.coefficient * sigma * np.sqrt(self.alpha / (2 - self.alpha))
-        lcl = s_avg - self.coefficient * sigma * np.sqrt(self.alpha / (2 - self.alpha))
-        print(s)
-        if s[-1] > ucl or s[-1] < lcl:
+        self.ucl = s_avg + self.coefficient * sigma * np.sqrt(self.alpha / (2 - self.alpha))
+        self.lcl = s_avg - self.coefficient * sigma * np.sqrt(self.alpha / (2 - self.alpha))
+        return self
+
+    def predict_one(self, x):
+        if x > self.ucl or x < self.lcl:
             return -1
         return 1
 

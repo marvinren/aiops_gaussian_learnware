@@ -14,4 +14,5 @@ def task_start():
 if __name__ == "__main__":
     p = Process(target=task_start)
     p.start()
+    print("================start================")
     p.join()

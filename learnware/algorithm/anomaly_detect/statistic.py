@@ -22,7 +22,7 @@ class ThreeSigma(BaseAnomalyDetect):
         return self
 
     def predict_one(self, X, return_confidence=False):
-        if abs(X[-1] - self.mu_) > self.index * self.sigma_:
+        if abs(X - self.mu_) > self.index * self.sigma_:
             return -1
         else:
             return 1
