@@ -35,6 +35,7 @@ def seasonal_check(ts):
 
     top_k_seasons = 3
     # top K=3 index
+    powers = powers.reshape(-1)
     top_k_idxs = np.argpartition(powers, -top_k_seasons)[-top_k_seasons:]
     top_k_power = powers[top_k_idxs]
     fft_periods = (1 / freqs[top_k_idxs]).astype(int)

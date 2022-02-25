@@ -126,3 +126,6 @@ class TimeSeriesAnomalyDetector(BaseDetector):
         model = ARIMA(seasonal_order=(1, 1, 1, 1440))
         pred = model.predict(X)
         return pred, None
+
+    def predict_one(self, value):
+        pass

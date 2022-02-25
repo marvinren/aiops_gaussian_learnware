@@ -6,13 +6,14 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.holtwinters import SimpleExpSmoothing, ExponentialSmoothing
 
 
-def extracted_features(df, n=10, select_features=None):
+def extracted_features(df, n=10, sesaonal=1440, select_features=None):
     df = ts_time_feature_generate(df, select_features)
-    df = ts_exponential_smoothing_feature_generate(df, 1440, select_features)
+    if sesaonal != 0:
+        df = ts_exponential_smoothing_feature_generate(df, sesaonal, select_features)
+        df = ts_seasonal_decompose(df, sesaonal, select_features)
     df = ts_rolling_statistics_feature_generate(df, n, select_features)
     df = ts_lag_feature_generate(df, n, select_features)
     df = ts_linear_feature_generate(df, n, select_features)
-    df = ts_seasonal_decompose(df, 1440, select_features)
     df = ts_fft_feature_generate(df, n, select_features)
     df = ts_wavelet_feature_generate(df, n, select_features)
     df = ts_wavelet_feature_generate(df, n, select_features)
